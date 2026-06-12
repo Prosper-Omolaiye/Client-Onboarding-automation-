@@ -1,0 +1,1497 @@
+{
+  "name": "Client Onboarding Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -48
+      ],
+      "id": "c8055a32-4ee9-4ac7-aeaa-362eb3f793a7",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "KO3wYKHqI5ceAwxL",
+          "name": "Google Sheets Trigger OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5ba148f8-45ff-418b-8a6e-006781164047",
+              "leftValue": "={{$json[\"Deal Status\"]}}",
+              "rightValue": "Won",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "9e1962a7-287f-4dfb-b55f-645680d03667",
+              "leftValue": "={{$json[\"Contract Signed\"]}}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "dbb48740-8156-44ed-89f2-1787a8ae9bfc",
+              "leftValue": "={{$json[\"Payment Received\"]}}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "cf6b34e8-6531-4392-bb9d-6f4cdebfaef1",
+              "leftValue": "={{$json[\"Onboarding status\"]}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        -48
+      ],
+      "id": "9dc6290c-a72b-465a-ade4-adc17ddb2e9e",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        448,
+        48
+      ],
+      "id": "22e6983d-c03e-4437-9508-2edd200becfe",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $json['Client Name'] }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1UkGQ9ybBIStkgXbZj5I5YU4z-VczG2gv",
+          "mode": "list",
+          "cachedResultName": "Clients",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1UkGQ9ybBIStkgXbZj5I5YU4z-VczG2gv"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        448,
+        -144
+      ],
+      "id": "466e56eb-2725-4f61-b0d3-41b9bce3738f",
+      "name": "Create folder2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VW8qYkQxL1N2kP7o",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "01-Admin",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json['id'] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        672,
+        -144
+      ],
+      "id": "87af94c0-8cbd-477e-ad8c-cc13e645a1d4",
+      "name": "Create folder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VW8qYkQxL1N2kP7o",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "02-Assets",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json['id'] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        896,
+        -144
+      ],
+      "id": "a650b582-43e6-4b6a-8371-9fb2b77c1fe3",
+      "name": "Create folder1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VW8qYkQxL1N2kP7o",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "03-Workflow",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json['id'] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        -144
+      ],
+      "id": "d4a3e109-d129-4acc-8871-f4e6cb1b4c9a",
+      "name": "Create folder3",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VW8qYkQxL1N2kP7o",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "04-Deliverables",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json['id'] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1344,
+        -144
+      ],
+      "id": "53f1da6d-cee0-4d6a-9683-ca4ebc407a6b",
+      "name": "Create folder4",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VW8qYkQxL1N2kP7o",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "copy",
+        "fileId": {
+          "__rl": true,
+          "value": "1TVEPGmkGisAD49ZAGPy97X7WNoD8rB8xtGDlSN1TyRI",
+          "mode": "list",
+          "cachedResultName": "Kickoff template ",
+          "cachedResultUrl": "https://docs.google.com/document/d/1TVEPGmkGisAD49ZAGPy97X7WNoD8rB8xtGDlSN1TyRI/edit?usp=drivesdk"
+        },
+        "name": "=Kickoff Doc — {{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+        "sameFolder": false,
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Create folder').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1568,
+        -144
+      ],
+      "id": "3731b237-9639-4e6f-92f4-3a1ab95ed10f",
+      "name": "Copy file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "VW8qYkQxL1N2kP7o",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1371607573,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=1371607573"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Status": "Pending",
+            "Owner": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+            "Client Name ": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+            "Due Date": "={{ $('Google Sheets Trigger').item.json['Start Date'] }}",
+            "Task ID": "=TASK-{{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Task Name": "Confirm client access"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Name ",
+              "displayName": "Client Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Owner",
+              "displayName": "Owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2000,
+        -144
+      ],
+      "id": "7299d05e-37dc-489e-a7c3-ac59c7687344",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1371607573,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=1371607573"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Status": "Pending",
+            "Owner": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+            "Client Name ": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+            "Due Date": "={{ $('Google Sheets Trigger').item.json['Start Date'] }}",
+            "Task ID": "=TASK-{{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Task Name": "Review package scope"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Name ",
+              "displayName": "Client Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Owner",
+              "displayName": "Owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2224,
+        -144
+      ],
+      "id": "0a7ae8ed-53ef-466d-9ecf-710ea355c406",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1371607573,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=1371607573"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Status": "Pending",
+            "Owner": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+            "Client Name ": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+            "Due Date": "={{ $('Google Sheets Trigger').item.json['Start Date'] }}",
+            "Task ID": "=TASK-{{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Task Name": "Schedule kickoff call"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Name ",
+              "displayName": "Client Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Owner",
+              "displayName": "Owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2448,
+        -144
+      ],
+      "id": "48a8a8db-c032-4423-9640-c6a966c1ce7f",
+      "name": "Append row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1371607573,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=1371607573"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Status": "Pending",
+            "Owner": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+            "Client Name ": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+            "Due Date": "={{ $('Google Sheets Trigger').item.json['Start Date'] }}",
+            "Task ID": "=TASK-{{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Task Name": "Create workflow map"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Name ",
+              "displayName": "Client Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Owner",
+              "displayName": "Owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2672,
+        -144
+      ],
+      "id": "b14bbb0d-d691-49d8-81fa-688cc2d91b6e",
+      "name": "Append row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1371607573,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=1371607573"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Status": "Pending",
+            "Owner": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+            "Client Name ": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+            "Due Date": "={{ $('Google Sheets Trigger').item.json['Start Date'] }}",
+            "Task ID": "=TASK-{{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Task Name": "Prepare asset checklist"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Name ",
+              "displayName": "Client Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Owner",
+              "displayName": "Owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2896,
+        -144
+      ],
+      "id": "c6655e0f-f71b-45db-9aa2-13ec67af2201",
+      "name": "Append row in sheet4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1371607573,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=1371607573"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Status": "Pending",
+            "Owner": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+            "Client Name ": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+            "Due Date": "={{ $('Google Sheets Trigger').item.json['Start Date'] }}",
+            "Task ID": "=TASK-{{ $('Google Sheets Trigger').item.json['Deal ID'] }}",
+            "Task Name": "Start project build"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Task ID",
+              "displayName": "Task ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Name ",
+              "displayName": "Client Name ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Task Name",
+              "displayName": "Task Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Owner",
+              "displayName": "Owner",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3120,
+        -144
+      ],
+      "id": "d618d0cc-6d68-4a46-b367-8080d5901355",
+      "name": "Append row in sheet5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json['Client Email'] }}",
+        "subject": "=Welcome onboard,{{ $json['Client Name '] }}  — Your project is starting!",
+        "message": "=Hi {{ $json['Client Name '] }}  ,\n\nWe're excited to welcome you onboard!\n\nYour project has officially kicked off. Here are your details:\nPackage:{{ $('If').item.json['Package Name'] }} \nStart Date: {{ $('If').item.json['Start Date'] }} \nAccount Manager: {{ $json.Owner }}\n\n\nWe'll be in touch shortly to schedule your kickoff call.\n\nWelcome aboard!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3344,
+        -144
+      ],
+      "id": "7249ae7d-ba08-4ca2-966b-f8de0e1b5b7c",
+      "name": "Send a message",
+      "webhookId": "baf1de37-0f7a-45fb-b840-cb8c637fdf43",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IpWz9KOKM4MBnsLu",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=8525308789 ",
+        "text": "=New Client Onboarded  Client:{{ $('Append row in sheet5').item.json['Client Name '] }}\nPackage:{{ $('If').item.json['Package Name'] }}\nStart Date::{{ $('Append row in sheet5').item.json['Due Date'] }}\nAccount Manager: :{{ $('Append row in sheet5').item.json['Owner'] }}\n Email: {{ $('If').item.json['Client Email'] }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3552,
+        -144
+      ],
+      "id": "70b95585-702d-4dcd-96eb-383a20fafd9a",
+      "name": "Send a text message",
+      "webhookId": "c547cc02-9c29-4d54-a11b-da41b2c6c4b4",
+      "credentials": {
+        "telegramApi": {
+          "id": "xzL5qA6JWWUS6uuK",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA",
+          "mode": "list",
+          "cachedResultName": "Deals",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wQeV8DY2pjn8p7jJZylW5U_wORx7r1Kq8p7vt-2vVeA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Kickoff Email status": "Sent",
+            "Internal Checklist Status": "Task created",
+            "Onboarding status": "Complete",
+            "Folder Link": "=https://drive.google.com/drive/folders/{{ $('Create folder4').item.json.id }}",
+            "Kickoff Doc Link": "=https://drive.google.com/drive/folders/ {{ $('Copy file').item.json.id }}",
+            "Deal ID": "={{ $('Google Sheets Trigger').item.json['Deal ID'] }}"
+          },
+          "matchingColumns": [
+            "Deal ID"
+          ],
+          "schema": [
+            {
+              "id": "Deal ID",
+              "displayName": "Deal ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Client Name",
+              "displayName": "Client Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Client Email",
+              "displayName": "Client Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Package Name",
+              "displayName": "Package Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Contract Signed",
+              "displayName": "Contract Signed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Payment Received",
+              "displayName": "Payment Received",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Deal Status",
+              "displayName": "Deal Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Start Date",
+              "displayName": "Start Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Account Manager",
+              "displayName": "Account Manager",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Folder Link",
+              "displayName": "Folder Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Kickoff Doc Link",
+              "displayName": "Kickoff Doc Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Onboarding status",
+              "displayName": "Onboarding status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Internal Checklist Status",
+              "displayName": "Internal Checklist Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Kickoff Email status",
+              "displayName": "Kickoff Email status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3760,
+        -144
+      ],
+      "id": "307289f0-f923-4d0c-bf7c-a0199057eae7",
+      "name": "Update row in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "U2zm1nP3u6RyI5XC",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "replaceAll",
+              "text": "{{Client Name}}",
+              "replaceText": "={{ $('Google Sheets Trigger').item.json['Client Name'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{Package Name}}",
+              "replaceText": "={{ $('Google Sheets Trigger').item.json['Package Name'] }}",
+              "matchCase": true
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{Start Date}}",
+              "replaceText": "={{ $('Google Sheets Trigger').item.json['Start Date'].toString()}}"
+            },
+            {
+              "action": "replaceAll",
+              "text": "{{Account Manager}}",
+              "replaceText": "={{ $('Google Sheets Trigger').item.json['Account Manager'] }}",
+              "matchCase": true
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1776,
+        -144
+      ],
+      "id": "de5c6ac1-9aa9-496a-b8b8-7460489df56b",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "yWi7j3mQbpdX8Gky",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create folder2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder2": {
+      "main": [
+        [
+          {
+            "node": "Create folder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder": {
+      "main": [
+        [
+          {
+            "node": "Create folder1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder1": {
+      "main": [
+        [
+          {
+            "node": "Create folder3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder3": {
+      "main": [
+        [
+          {
+            "node": "Create folder4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create folder4": {
+      "main": [
+        [
+          {
+            "node": "Copy file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy file": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet3": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet4": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet5": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a document": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "f73df244-43c3-4afc-9154-a2174ab18119",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9603e4208df33439b60635d32ffc66aaa4cb6492e22fa6fc8063f5e60a26c7fd"
+  },
+  "id": "X49PERqweCUs7ltp",
+  "tags": []
+}
